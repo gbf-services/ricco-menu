@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ricco Street Food</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EDD8;
+    --red: #C41E2A;
+    --dark-red: #8B1219;
+    --black: #1A1008;
+    --warm-white: #FAF5EA;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--cream);
+    color: var(--black);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 20px,
+      rgba(196,30,42,0.04) 20px,
+      rgba(196,30,42,0.04) 40px
+    );
+    pointer-events: none;
+  }
+
+  .hero-logo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid var(--red);
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    animation: pulse-ring 2s infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(196,30,42,0.4); }
+    50% { box-shadow: 0 0 0 20px rgba(196,30,42,0); }
+  }
+
+  .hero-logo svg { width: 100px; height: 100px; }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(5rem, 15vw, 10rem);
+    color: var(--red);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    text-shadow: 4px 4px 0 rgba(196,30,42,0.2);
+  }
+
+  .hero-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-top: 0.5rem;
+    opacity: 0.7;
+  }
+
+  .hero-tags {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .hero-tag {
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.4rem 1.2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .hero-info {
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--dark-red);
+    font-weight: 600;
+    line-height: 1.8;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 1.5s infinite;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--dark-red);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* NAV */
+  nav {
+    background: var(--red);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 1rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-bottom: 3px solid var(--dark-red);
+  }
+
+  nav::-webkit-scrollbar { display: none; }
+
+  nav button {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.75);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+  }
+
+  nav button:hover, nav button.active {
+    color: white;
+    border-bottom-color: var(--cream);
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 4rem 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(3.5rem, 12vw, 6rem);
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .section-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-size: 0.85rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* MENU ITEMS */
+  .menu-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(245,237,216,0.1);
+    transition: all 0.2s;
+  }
+
+  .menu-item:hover { background: rgba(196,30,42,0.05); margin: 0 -1rem; padding: 1.5rem 1rem; }
+
+  .item-info { flex: 1; }
+
+  .item-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.3rem;
+  }
+
+  .item-desc {
+    font-size: 0.88rem;
+    color: rgba(245,237,216,0.65);
+    line-height: 1.5;
+    max-width: 500px;
+  }
+
+  .item-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .item-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--cream);
+    white-space: nowrap;
+  }
+
+  /* Size selector for sandwiches */
+  .size-selector {
+    display: flex;
+    gap: 0.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .size-btn {
+    background: rgba(245,237,216,0.1);
+    border: 1px solid rgba(245,237,216,0.2);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .size-btn.selected, .size-btn:hover {
+    background: var(--red);
+    border-color: var(--red);
+  }
+
+  .add-btn {
+    background: var(--red);
+    border: none;
+    color: white;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .add-btn:hover {
+    background: var(--dark-red);
+    transform: scale(1.1);
+  }
+
+  /* Price note */
+  .promo-bar {
+    background: var(--red);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  /* Sub section */
+  .sub-section {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: rgba(245,237,216,0.4);
+    margin: 2rem 0 0.5rem;
+  }
+
+  /* CART */
+  .cart-float {
+    position: fixed;
+    bottom: 2rem;
+    right: 1.5rem;
+    z-index: 200;
+  }
+
+  .cart-fab {
+    background: var(--red);
+    color: white;
+    border: none;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    font-size: 1.6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 24px rgba(196,30,42,0.5);
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .cart-fab:hover { transform: scale(1.08); }
+
+  .cart-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: white;
+    color: var(--red);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  /* CART DRAWER */
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 300;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+  .cart-drawer {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    bottom: 0;
+    width: min(420px, 100vw);
+    background: var(--black);
+    border-left: 2px solid var(--red);
+    z-index: 400;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+  }
+
+  .cart-drawer.open { right: 0; }
+
+  .cart-header {
+    background: var(--red);
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cart-header h2 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    color: white;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.2rem;
+    line-height: 1;
+  }
+
+  .cart-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+  }
+
+  .cart-empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: rgba(245,237,216,0.4);
+  }
+
+  .cart-empty .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+  .cart-empty p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(245,237,216,0.08);
+  }
+
+  .cart-item-info { flex: 1; }
+
+  .cart-item-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    color: var(--cream);
+    text-transform: uppercase;
+  }
+
+  .cart-item-price {
+    font-size: 0.85rem;
+    color: var(--red);
+    margin-top: 0.2rem;
+    font-weight: 600;
+  }
+
+  .cart-qty {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+  }
+
+  .qty-btn {
+    background: rgba(245,237,216,0.1);
+    border: none;
+    color: var(--cream);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .qty-btn:hover { background: var(--red); }
+
+  .qty-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  /* Notes */
+  .notes-section {
+    margin-top: 1.5rem;
+  }
+
+  .notes-section label {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: rgba(245,237,216,0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .notes-section textarea {
+    width: 100%;
+    background: rgba(245,237,216,0.05);
+    border: 1px solid rgba(245,237,216,0.15);
+    color: var(--cream);
+    padding: 0.75rem 1rem;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    resize: none;
+    height: 80px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .notes-section textarea:focus { border-color: var(--red); }
+  .notes-section textarea::placeholder { color: rgba(245,237,216,0.3); }
+
+  /* Location selector */
+  .location-section {
+    margin-top: 1.5rem;
+  }
+
+  .location-section label {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: rgba(245,237,216,0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .location-btns {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .loc-btn {
+    flex: 1;
+    background: rgba(245,237,216,0.05);
+    border: 1px solid rgba(245,237,216,0.2);
+    color: var(--cream);
+    padding: 0.6rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .loc-btn.selected, .loc-btn:hover {
+    background: var(--red);
+    border-color: var(--red);
+  }
+
+  /* Cart footer */
+  .cart-footer {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(245,237,216,0.1);
+    background: rgba(0,0,0,0.3);
+  }
+
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .cart-total span:first-child {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: rgba(245,237,216,0.6);
+  }
+
+  .cart-total span:last-child {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem;
+    color: var(--cream);
+    letter-spacing: 1px;
+  }
+
+  .whatsapp-btn {
+    width: 100%;
+    background: #25D366;
+    border: none;
+    color: white;
+    padding: 1.1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    transition: all 0.2s;
+  }
+
+  .whatsapp-btn:hover { background: #1da851; transform: translateY(-1px); }
+
+  .whatsapp-btn svg { width: 22px; height: 22px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 2px solid var(--red);
+    padding: 3rem 1.5rem 1.5rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 3rem;
+    color: var(--red);
+    letter-spacing: 3px;
+  }
+
+  .footer-tagline {
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: rgba(245,237,216,0.4);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-contacts {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .footer-contact {
+    font-size: 0.9rem;
+    color: rgba(245,237,216,0.6);
+    line-height: 1.6;
+  }
+
+  .footer-contact strong {
+    display: block;
+    color: var(--red);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .footer-divider {
+    border: none;
+    border-top: 1px solid rgba(245,237,216,0.08);
+    margin: 1.5rem 0;
+  }
+
+  .powered-by {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(245,237,216,0.3);
+  }
+
+  .powered-by span {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .section { padding: 3rem 1rem; }
+    .menu-item { flex-wrap: wrap; }
+    .item-right { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; margin-top: 0.5rem; }
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 7rem;
+    right: 1.5rem;
+    background: var(--red);
+    color: white;
+    padding: 0.7rem 1.2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    z-index: 500;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Decorative separator */
+  .sep {
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--red), transparent);
+    margin: 0 auto;
+    max-width: 900px;
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-logo">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="48" stroke="#F5EDD8" stroke-width="2"/>
+      <text x="50" y="38" text-anchor="middle" font-family="'Bebas Neue', cursive" font-size="22" fill="#F5EDD8">RICCO</text>
+      <text x="50" y="60" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-size="9" fill="#F5EDD8" letter-spacing="2">STREET</text>
+      <text x="50" y="72" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-size="9" fill="#F5EDD8" letter-spacing="2">FOOD</text>
+    </svg>
+  </div>
+  <h1>RICCO</h1>
+  <p class="hero-sub">Street Food For All</p>
+  <div class="hero-tags">
+    <span class="hero-tag">🥪 Sandwiches</span>
+    <span class="hero-tag">🍟 Starters</span>
+    <span class="hero-tag">🚴 We Deliver</span>
+    <span class="hero-tag">12pm – 12am</span>
+  </div>
+  <div class="hero-info">
+    📍 Zgharta · 06 662 563 &nbsp;|&nbsp; Ehden · 70 050 382
+  </div>
+  <div class="scroll-hint">▼ Order Now ▼</div>
+</section>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <button class="active" onclick="scrollTo('starters')">Starters</button>
+  <button onclick="scrollTo('beef')">Beef</button>
+  <button onclick="scrollTo('chicken')">Chicken</button>
+  <button onclick="scrollTo('veggie')">Veggie</button>
+  <button onclick="scrollTo('sweets')">Sweets</button>
+  <button onclick="scrollTo('drinks')">Drinks</button>
+  <button onclick="scrollTo('dips')">Dips</button>
+</nav>
+
+<!-- STARTERS -->
+<section id="starters" class="section">
+  <h2 class="section-title">STARTERS</h2>
+  <div class="section-sub">● Shareable bites</div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">ADABADO</div>
+      <div class="item-desc">Spicy/Regular Deep fried chicken tenders (4 pcs) with French fries, pickles, coleslaw and our special dressing.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">800,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Adabado','800,000 LL',800000,'starters')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">PAPAS</div>
+      <div class="item-desc">Deep fried chicken bites on a bed of coleslaw topped with potatoes and our 404 dip.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">800,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Papas','800,000 LL',800000,'starters')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">EVERYTHING'S BETTER ON A STICK</div>
+      <div class="item-desc">Deep fried chicken breasts (2 pcs) stuffed with mozzarella cheese and our 404 dip.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">500,000 LL</div>
+      <button class="add-btn" onclick="addToCart("Everything's Better on a Stick",'500,000 LL',500000,'starters')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">FRIES</div>
+      <div class="item-desc">Coated with our spice blend.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">300,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Fries','300,000 LL',300000,'starters')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">GOLDEN BALLS</div>
+      <div class="item-desc">Deep fried coated mac and cheese balls (3 pcs) with your choice of a side dip.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">400,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Golden Balls','400,000 LL',400000,'starters')">+</button>
+    </div>
+  </div>
+
+  <div class="sub-section">For Two 🖤</div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">PASTA</div>
+      <div class="item-desc">With fresh mushrooms. Sauce: white, red, pink or mustard. + Add Chicken, Bacon or Pepperoni (+250,000)</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">900,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Pasta','900,000 LL',900000,'starters')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">OH POTATO</div>
+      <div class="item-desc">Fries with fresh mushrooms. Sauce: white, red, pink or mustard. + Add Chicken, Bacon or Pepperoni (+250,000)</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">900,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Oh Potato','900,000 LL',900000,'starters')">+</button>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- BEEF SANDWICHES -->
+<section id="beef" class="section">
+  <h2 class="section-title">SANDWICHES</h2>
+  <div class="section-sub">● Beef</div>
+
+  <div class="promo-bar">🔥 Add Fries + Soft Drink for only 300,000 LL!</div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">RICCO 🐄🐖🍺</div>
+      <div class="item-desc">Grilled beef with Mozzarella and Bacon and a shot of Jack Honey, topped with caramelised onions, fresh mushrooms, pickles, Rocca, and our special dressing.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">1,100,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Ricco Sandwich','1,100,000 LL',1100000,'beef')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">CUBAN 🐄🐖</div>
+      <div class="item-desc">Grilled beef with Mozzarella and bacon with BBQ sauce, topped with fresh mushrooms, pickles, Rocca, and our special dressing.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">1,000,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Cuban','1,000,000 LL',1000000,'beef')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">PHILOLOGY 🐄</div>
+      <div class="item-desc">Grilled beef with cheddar or Mozzarella, soy sauce, onions, fresh mushrooms, pickles, Rocca, and our special dressing.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">1,000,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Philology','1,000,000 LL',1000000,'beef')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">CHOEROS 🐄🐖</div>
+      <div class="item-desc">Grilled beef with Mozzarella and Pepperoni, fresh mushrooms, pickles, rocca and chimichurri sauce.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">1,050,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Choeros','1,050,000 LL',1050000,'beef')">+</button>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- CHICKEN SANDWICHES -->
+<section id="chicken" class="section">
+  <h2 class="section-title">SANDWICHES</h2>
+  <div class="section-sub">● Chicken — S: Brioche · M: Mini Guette · L: Ciabatta</div>
+
+  <div id="chicken-items">
+    <!-- Frango -->
+    <div class="menu-item" id="item-frango">
+      <div class="item-info">
+        <div class="item-name">FRANGO 🐔</div>
+        <div class="item-desc">Deep-fried breaded chicken breast stuffed with a Mozzarella and Gruyère mix, topped with pickles, tomatoes, lettuce and our special dressing.</div>
+        <div class="size-selector">
+          <button class="size-btn selected" data-item="frango" data-size="S" onclick="selectSize(this,'frango','S',600000)">S 600K</button>
+          <button class="size-btn" data-item="frango" data-size="M" onclick="selectSize(this,'frango','M',700000)">M 700K</button>
+          <button class="size-btn" data-item="frango" data-size="L" onclick="selectSize(this,'frango','L',1000000)">L 1,000K</button>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price" id="price-frango">600,000 LL</div>
+        <button class="add-btn" onclick="addSizedItem('frango','Frango')">+</button>
+      </div>
+    </div>
+
+    <!-- El Bandino -->
+    <div class="menu-item">
+      <div class="item-info">
+        <div class="item-name">EL BANDINO 🐔</div>
+        <div class="item-desc">Deep-fried chicken breast topped with parmesan, tomato sauce, pickles, Rocca and our special dressing.</div>
+        <div class="size-selector">
+          <button class="size-btn selected" data-item="bandino" data-size="S" onclick="selectSize(this,'bandino','S',600000)">S 600K</button>
+          <button class="size-btn" data-item="bandino" data-size="M" onclick="selectSize(this,'bandino','M',700000)">M 700K</button>
+          <button class="size-btn" data-item="bandino" data-size="L" onclick="selectSize(this,'bandino','L',1000000)">L 1,000K</button>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price" id="price-bandino">600,000 LL</div>
+        <button class="add-btn" onclick="addSizedItem('bandino','El Bandino')">+</button>
+      </div>
+    </div>
+
+    <!-- Sokosoko -->
+    <div class="menu-item">
+      <div class="item-info">
+        <div class="item-name">SOKOSOKO 🐔</div>
+        <div class="item-desc">Deep-fried breaded chicken tenders topped with Cheddar, pickles, coleslaw and our special dressing.</div>
+        <div class="size-selector">
+          <button class="size-btn selected" data-item="sokosoko" data-size="S" onclick="selectSize(this,'sokosoko','S',600000)">S 600K</button>
+          <button class="size-btn" data-item="sokosoko" data-size="M" onclick="selectSize(this,'sokosoko','M',700000)">M 700K</button>
+          <button class="size-btn" data-item="sokosoko" data-size="L" onclick="selectSize(this,'sokosoko','L',1000000)">L 1,000K</button>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price" id="price-sokosoko">600,000 LL</div>
+        <button class="add-btn" onclick="addSizedItem('sokosoko','Sokosoko')">+</button>
+      </div>
+    </div>
+
+    <!-- Sokosina -->
+    <div class="menu-item">
+      <div class="item-info">
+        <div class="item-name">SOKOSINA 🐔🐖</div>
+        <div class="item-desc">(BBQ, Honey-mustard or Buffalo sauce) Deep-fried breaded chicken tenders with Mozzarella, pepperoni, pickles, Rocca and our special dressing.</div>
+        <div class="size-selector">
+          <button class="size-btn selected" data-item="sokosina" data-size="S" onclick="selectSize(this,'sokosina','S',600000)">S 600K</button>
+          <button class="size-btn" data-item="sokosina" data-size="M" onclick="selectSize(this,'sokosina','M',750000)">M 750K</button>
+          <button class="size-btn" data-item="sokosina" data-size="L" onclick="selectSize(this,'sokosina','L',1050000)">L 1,050K</button>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price" id="price-sokosina">600,000 LL</div>
+        <button class="add-btn" onclick="addSizedItem('sokosina','Sokosina')">+</button>
+      </div>
+    </div>
+
+    <!-- Husker -->
+    <div class="menu-item">
+      <div class="item-info">
+        <div class="item-name">HUSKER 🐔🐖</div>
+        <div class="item-desc">Grilled chicken with Mozzarella, BBQ sauce, bacon, onions, bell pepper, pickles, lettuce, and our special dressing.</div>
+        <div class="size-selector">
+          <button class="size-btn selected" data-item="husker" data-size="S" onclick="selectSize(this,'husker','S',600000)">S 600K</button>
+          <button class="size-btn" data-item="husker" data-size="M" onclick="selectSize(this,'husker','M',750000)">M 750K</button>
+          <button class="size-btn" data-item="husker" data-size="L" onclick="selectSize(this,'husker','L',1050000)">L 1,050K</button>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price" id="price-husker">600,000 LL</div>
+        <button class="add-btn" onclick="addSizedItem('husker','Husker')">+</button>
+      </div>
+    </div>
+
+    <!-- Chichirivitchi -->
+    <div class="menu-item">
+      <div class="item-info">
+        <div class="item-name">CHICHIRIVITCHI 🐔🐖🌶️</div>
+        <div class="item-desc">Grilled chicken with Mozzarella, pepperoni, buffalo sauce, bell pepper, fresh mushrooms, tomatoes, lettuce, and our special dressing.</div>
+        <div class="size-selector">
+          <button class="size-btn selected" data-item="chichi" data-size="S" onclick="selectSize(this,'chichi','S',600000)">S 600K</button>
+          <button class="size-btn" data-item="chichi" data-size="M" onclick="selectSize(this,'chichi','M',750000)">M 750K</button>
+          <button class="size-btn" data-item="chichi" data-size="L" onclick="selectSize(this,'chichi','L',1050000)">L 1,050K</button>
+        </div>
+      </div>
+      <div class="item-right">
+        <div class="item-price" id="price-chichi">600,000 LL</div>
+        <button class="add-btn" onclick="addSizedItem('chichi','Chichirivitchi')">+</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- VEGGIE -->
+<section id="veggie" class="section">
+  <h2 class="section-title">SANDWICHES</h2>
+  <div class="section-sub">● Vegetarian — S: Brioche · M: Mini Guette · L: Ciabatta</div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">EL QUESO 🌿</div>
+      <div class="item-desc">Mozzarella, gruyere and parmesan mix with onions, bell peppers, fresh mushrooms, and tomato sauce topped with pickles, Rocca, and our special sauce.</div>
+      <div class="size-selector">
+        <button class="size-btn selected" data-item="queso" data-size="S" onclick="selectSize(this,'queso','S',500000)">S 500K</button>
+        <button class="size-btn" data-item="queso" data-size="M" onclick="selectSize(this,'queso','M',700000)">M 700K</button>
+        <button class="size-btn" data-item="queso" data-size="L" onclick="selectSize(this,'queso','L',900000)">L 900K</button>
+      </div>
+    </div>
+    <div class="item-right">
+      <div class="item-price" id="price-queso">500,000 LL</div>
+      <button class="add-btn" onclick="addSizedItem('queso','El Queso')">+</button>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- SWEETS -->
+<section id="sweets" class="section">
+  <h2 class="section-title">SWEETS</h2>
+  <div class="section-sub">● Desserts</div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">ACABADRO</div>
+      <div class="item-desc">Soft brioche bread filled with melted mozzarella and chocolate spread.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">300,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Acabadro','300,000 LL',300000,'sweets')">+</button>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- DRINKS -->
+<section id="drinks" class="section">
+  <h2 class="section-title">DRINKS</h2>
+  <div class="section-sub">● Beverages</div>
+
+  <div class="menu-item">
+    <div class="item-info"><div class="item-name">SOFT DRINKS</div></div>
+    <div class="item-right">
+      <div class="item-price">100,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Soft Drink','100,000 LL',100000,'drinks')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info"><div class="item-name">ICED TEA</div></div>
+    <div class="item-right">
+      <div class="item-price">200,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Iced Tea','200,000 LL',200000,'drinks')">+</button>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="item-info"><div class="item-name">WATER</div></div>
+    <div class="item-right">
+      <div class="item-price">50,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Water','50,000 LL',50000,'drinks')">+</button>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- DIPS -->
+<section id="dips" class="section">
+  <h2 class="section-title">DIPS</h2>
+  <div class="section-sub">● Sauces & extras</div>
+
+  <div class="menu-item">
+    <div class="item-info">
+      <div class="item-name">EXTRA DIP</div>
+      <div class="item-desc">BBQ, Honey Mustard, Buffalo, Cheddar, Chili Mayo, 404 dip, Special Dressing.</div>
+    </div>
+    <div class="item-right">
+      <div class="item-price">100,000 LL</div>
+      <button class="add-btn" onclick="addToCart('Extra Dip','100,000 LL',100000,'dips')">+</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">RICCO</div>
+  <div class="footer-tagline">Street Food For All</div>
+  <div class="footer-contacts">
+    <div class="footer-contact">
+      <strong>Zgharta</strong>
+      📞 06 662 563<br>12pm – 12am
+    </div>
+    <div class="footer-contact">
+      <strong>Ehden</strong>
+      📞 70 050 382<br>12pm – 12am
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="powered-by">Powered by <span>gbf-services</span></div>
+</footer>
+
+<!-- CART FLOAT -->
+<div class="cart-float">
+  <button class="cart-fab" onclick="openCart()">
+    🛒
+    <span class="cart-count" id="cart-count" style="display:none">0</span>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Added to cart!</div>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-header">
+    <h2>YOUR ORDER</h2>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body">
+    <div id="cart-items-list"></div>
+
+    <div class="location-section">
+      <label>Branch</label>
+      <div class="location-btns">
+        <button class="loc-btn selected" id="loc-zgharta" onclick="selectLocation('Zgharta','06 662 563')">📍 Zgharta</button>
+        <button class="loc-btn" id="loc-ehden" onclick="selectLocation('Ehden','70 050 382')">📍 Ehden</button>
+      </div>
+    </div>
+
+    <div class="notes-section">
+      <label>Special Notes</label>
+      <textarea id="order-notes" placeholder="Allergies, extra sauce, no pickles…"></textarea>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cart-total-display">0 LL</span>
+    </div>
+    <button class="whatsapp-btn" onclick="sendWhatsApp()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Order via WhatsApp
+    </button>
+  </div>
+</div>
+
+<script>
+  let cart = [];
+  let selectedLocation = { name: 'Zgharta', phone: '06 662 563' };
+  let sizeSelections = {};
+
+  function formatLL(n) {
+    return n.toLocaleString('en') + ' LL';
+  }
+
+  function selectSize(btn, itemId, size, price) {
+    // Deselect all for this item
+    document.querySelectorAll(`[data-item="${itemId}"]`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    sizeSelections[itemId] = { size, price };
+    // Update displayed price
+    const priceEl = document.getElementById('price-' + itemId);
+    if (priceEl) priceEl.textContent = price.toLocaleString('en') + ',000 LL';
+    // Actually store numeric
+    sizeSelections[itemId].priceNum = price;
+  }
+
+  function addSizedItem(itemId, name) {
+    const sel = sizeSelections[itemId];
+    const size = sel ? sel.size : 'S';
+    const priceNum = sel ? sel.priceNum : null;
+    // Get price from selected button
+    const activeBtn = document.querySelector(`[data-item="${itemId}"].selected`);
+    let price = 600000;
+    if (activeBtn) {
+      const txt = activeBtn.textContent;
+      const match = txt.match(/(\d[,\d]*)/);
+      if (match) price = parseInt(match[1].replace(/,/g,'')) * 1000;
+    }
+    addToCart(`${name} (${size})`, formatLL(price), price, 'sandwich');
+  }
+
+  function addToCart(name, priceStr, priceNum, category) {
+    const existing = cart.find(i => i.name === name);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ name, priceStr, priceNum, qty: 1 });
+    }
+    updateCartUI();
+    showToast('Added: ' + name);
+  }
+
+  function updateCartUI() {
+    const total = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+
+    document.getElementById('cart-total-display').textContent = formatLL(total);
+
+    const countEl = document.getElementById('cart-count');
+    if (count > 0) {
+      countEl.style.display = 'flex';
+      countEl.textContent = count;
+    } else {
+      countEl.style.display = 'none';
+    }
+
+    renderCartItems();
+  }
+
+  function renderCartItems() {
+    const list = document.getElementById('cart-items-list');
+    if (cart.length === 0) {
+      list.innerHTML = '<div class="cart-empty"><div class="empty-icon">🛒</div><p>Your order is empty</p></div>';
+      return;
+    }
+    list.innerHTML = cart.map((item, i) => `
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">${item.priceStr}</div>
+          <div class="cart-qty">
+            <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function changeQty(i, delta) {
+    cart[i].qty += delta;
+    if (cart[i].qty <= 0) cart.splice(i, 1);
+    updateCartUI();
+  }
+
+  function selectLocation(name, phone) {
+    selectedLocation = { name, phone };
+    document.getElementById('loc-zgharta').classList.toggle('selected', name === 'Zgharta');
+    document.getElementById('loc-ehden').classList.toggle('selected', name === 'Ehden');
+  }
+
+  function openCart() {
+    document.getElementById('cart-overlay').classList.add('open');
+    document.getElementById('cart-drawer').classList.add('open');
+    renderCartItems();
+  }
+
+  function closeCart() {
+    document.getElementById('cart-overlay').classList.remove('open');
+    document.getElementById('cart-drawer').classList.remove('open');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  function sendWhatsApp() {
+    if (cart.length === 0) {
+      showToast('Your cart is empty!');
+      return;
+    }
+
+    const notes = document.getElementById('order-notes').value.trim();
+    let msg = `🍔 *RICCO STREET FOOD ORDER*\n`;
+    msg += `📍 Branch: ${selectedLocation.name}\n\n`;
+    msg += `*Items:*\n`;
+    cart.forEach(item => {
+      msg += `• ${item.name} x${item.qty} — ${formatLL(item.priceNum * item.qty)}\n`;
+    });
+    const total = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
+    msg += `\n💰 *Total: ${formatLL(total)}*`;
+    if (notes) msg += `\n\n📝 *Notes:* ${notes}`;
+
+    const phone = selectedLocation.name === 'Zgharta' ? '96106662563' : '96170050382';
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  // Nav scroll behavior
+  function scrollTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Active nav on scroll
+  const sections = ['starters','beef','chicken','veggie','sweets','drinks','dips'];
+  window.addEventListener('scroll', () => {
+    const btns = document.querySelectorAll('nav button');
+    sections.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= 80 && rect.bottom > 80) {
+        btns.forEach(b => b.classList.remove('active'));
+        btns[i]?.classList.add('active');
+      }
+    });
+  });
+
+  // Init size selections
+  ['frango','bandino','sokosoko','sokosina','husker','chichi','queso'].forEach(id => {
+    sizeSelections[id] = { size: 'S', priceNum: id === 'queso' ? 500000 : 600000 };
+  });
+
+  updateCartUI();
+</script>
+</body>
+</html>
