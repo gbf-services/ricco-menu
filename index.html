@@ -730,6 +730,9 @@
     max-width: 900px;
     opacity: 0.4;
   }
+  .section {
+  scroll-margin-top: 30px;
+}
 </style>
 </head>
 <body>
@@ -760,13 +763,13 @@
 
 <!-- NAV -->
 <nav id="main-nav">
-  <button class="active" onclick="scrollTo('starters')">Starters</button>
-  <button onclick="scrollTo('beef')">Beef</button>
-  <button onclick="scrollTo('chicken')">Chicken</button>
-  <button onclick="scrollTo('veggie')">Veggie</button>
-  <button onclick="scrollTo('sweets')">Sweets</button>
-  <button onclick="scrollTo('drinks')">Drinks</button>
-  <button onclick="scrollTo('dips')">Dips</button>
+  <button class="active" onclick="scrollToSection('starters')">Starters</button>
+<button onclick="scrollToSection('beef')">Beef</button>
+<button onclick="scrollToSection('chicken')">Chicken</button>
+<button onclick="scrollToSection('veggie')">Veggie</button>
+<button onclick="scrollToSection('sweets')">Sweets</button>
+<button onclick="scrollToSection('drinks')">Drinks</button>
+<button onclick="scrollToSection('dips')">Dips</button>
 </nav>
 
 <!-- STARTERS -->
@@ -803,7 +806,7 @@
     </div>
     <div class="item-right">
       <div class="item-price">500,000 LL</div>
-      <button class="add-btn" onclick="addToCart("Everything's Better on a Stick",'500,000 LL',500000,'starters')">+</button>
+      <button class="add-btn" onclick="addToCart(' Everything is Better on a Stick','500,000 LL',500000,'starters')">+</button>
     </div>
   </div>
 
@@ -1318,9 +1321,15 @@
   }
 
   // Nav scroll behavior
-  function scrollTo(id) {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function scrollToSection(id) {
+  const section = document.getElementById(id);
+  if(section){
+    section.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   }
+}
 
   // Active nav on scroll
   const sections = ['starters','beef','chicken','veggie','sweets','drinks','dips'];
